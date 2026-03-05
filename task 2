@@ -1,0 +1,67 @@
+#include<iostream>
+#include<string>
+#include<fstream>
+using namespace std;
+
+class search {
+public:
+    string arr[1000];
+    int count;
+
+    search() { count = 0; }
+
+    void read() {
+        ifstream rd("data.csv");
+
+        if (!rd) {
+            cout << "File not found!" << endl;
+            return;
+        }
+
+        string line;
+        while (getline(rd, line)) {
+            arr[count] = line;
+            count++;
+        }
+        rd.close();
+    }
+
+    void add() {
+        cin.ignore();
+        string info;
+        ofstream wr("data.csv",ios::app);
+        cout << "\nenter information: " << endl; 
+        getline(cin, info);
+        wr << info;
+        wr.close();
+       
+        
+
+    }
+    void searching(string num) {
+        for (int i = 0; i < count; i++) {
+            if (arr[i].find(num) != string::npos) {
+                display(i);
+            }
+        }
+    }
+
+    void display(int a) {
+        cout << arr[a] << endl;
+    }
+};
+
+int main() {
+
+    string reg_no;
+
+    cout << "Enter registration number: ";
+    cin >> reg_no;
+
+    search obj;
+    obj.read();
+    obj.searching(reg_no);
+    obj.add();
+
+    return 0;
+}
